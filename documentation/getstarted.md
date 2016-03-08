@@ -23,7 +23,7 @@ Clone this (basho/spark-riak-connector) repository, then build Spark-Riak connec
 mvn clean install
 ```
 
-Integration tests are executed during the build, and the build may **?? may or will?** fail if there is no BDP Riak node running on `localhost:8087`. **?? is BDP a prereq?**
+Integration tests are executed during the build, and you will see errors if there is no Riak node running on `localhost:8087`. **?? Add section about tests (there are options for running over KV or TS) Also add install Riak section.**
 
 You can skip the integration tests by running the build command with the `-DskipTests` flag:
 
