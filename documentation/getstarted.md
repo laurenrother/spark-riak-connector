@@ -23,14 +23,29 @@ Clone this (basho/spark-riak-connector) repository, then build Spark-Riak connec
 mvn clean install
 ```
 
-Integration tests are executed during the build, and you will see errors if there is no Riak node running on `localhost:8087`. **?? Add section about tests (there are options for running over KV or TS) Also add install Riak section.**
+Integration tests are executed with maven failsafe plugin so Spark-Riak connector can be built even if there is no Riak node running.
 
-You can skip the integration tests by running the build command with the `-DskipTests` flag:
+You can skip the tests by running the build command with the `-DskipTests` flag:
 
 ```
 mvn clean install -DskipTests
 ```
 
+##Testing
+
+In Spark Riak connector unit tests are separated from integration tests. 
+In case if there is no Riak installation it is still possible to successfully run unit tests:
+```
+mvn clean test
+```
+If there is Riak installed it is possible to run both unit tests and integration test. Futhermore, KV-specific integration tests are separated from TS-specific ones. To choose which set of tests to run appropriete maven ptofile should be selected: riak_kv(default) or riak_ts.
+```
+mvn clean verify -P riak_ts
+```
+Riak host can be provided in com.basho.riak.pbchost variable
+``
+mvn clean verify -P riak_ts -Dcom.basho.riak.pbchost=myhost:8087
+```
 
 ##Set Up for Development
 
