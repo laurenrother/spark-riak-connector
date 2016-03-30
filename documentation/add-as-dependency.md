@@ -1,0 +1,1 @@
+» **Add instructions + examples for how to add S-R connector as a dependency. (3 languages: java (POM.xml file), scala (build.sbt file), or python (adding it to the PySpark/Spark classpath))** « 
