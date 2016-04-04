@@ -1,89 +1,13 @@
-
 ## Set Up for Development
 
-**?? I don't quite understand what the flow of To-Dos here is.**
-
-This document will walk you through setting up your environment for development with the Spark-Riak connector.
-
-If you have not yet downloaded, installed, and built the Spark-Riak connector, go [here](https://github.com/basho/spark-riak-connector/tree/master/documentation/download-and-install.md).
-
-If you want to add the connector as a dependency to your application, go [here](https://github.com/basho/spark-riak-connector/tree/master/documentation/add-as-dependecy.md).
-
-## Libraries 
-
-Several .jars are produced when the Spark-Riak connector is built. 
-
-* `spark-riak-connector-1.0.0.jar` - is the main connector jar, located in spark-riak-connector/target/.
-* `spark-riak-connector-java-1.0.0.jar` - is required for developing Spark applications in Java, located in spark-riak-connector/target/.
-* `guava-14.0.1.jar` - the connector depends on this library.
-* `jackson-datatype-joda-2.2.2.jar` - the connector depends on this library.
-* `joda-time-2.1.jar` - the connector depends on this library.
-* `jackson-module-scala_2.10-2.4.4.jar` - the connector depends on this library.
-* `jcommon-1.0.23.jar` - the connector depends on this library.
-* `scala-java8-compat_2.10-0.3.0.jar` - the connector depends on this library.
-* `dataplatform-riak-client-1.0.0.jar` - the connector depends on this library.
-
-All of these libraries need to be referenced by your Spark application and accessible through the classpath of the driver program.
- 
-» Please see below code snippets in Scala, or explore the source code of bundled examples in Java and Scala. **?? for what?** « 
- 
-The following link can be used to manually download the [dataplatform-riak-client-1.0.0.jar](https://bintray.com/basho/data-platform/com.basho.riak/view)
-from the Bintray repository. » **Why would I need to do this?** « 
-
-To download `dataplatform-riak-client.jar` automatically during the build, the following repository should be added to pom.xml: » **If this is true, this chunk needs to be moved to the download/install doc.**
-
-```xml
-<repository>
-    <id>bintray</id>
-    <url>https://dl.bintray.com/basho/data-platform</url>
-    <releases>
-        <enabled>true</enabled>
-    </releases>
-    <snapshots>
-        <enabled>false</enabled>
-    </snapshots>
-</repository>
-```
-
-All of the examples »**Things have moved around enough that I'm not sure which examples** «  are currently based on the 1.0.0 release of the connector. 
-If your spark project uses maven, include the following dependency to enable Spark Riak Connector: » **When? At build? After?** « 
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>com.basho</groupId>
-        <artifactId>spark-riak-connector</artifactId>
-        <version>1.0.0</version>
-    </dependency>
-    ...
-</dependencies>
-```
-
-If your Spark application is going to be written in Java, add the following dependency in addition to the one above:
-
-```xml
-<dependency>
-    <groupId>com.basho</groupId>
-    <artifactId>spark-riak-connector-java</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
-
-
-### Necessary imports
-**?? Also, not sure what the to-do here is.**
-
-```scala
-import com.basho.riak.client.core.query.Namespace
-import com.basho.riak.spark.rdd.RiakFunctions
-import org.apache.spark.{SparkContext, SparkConf}
-import com.basho.riak.spark._
-```
+This document will walk you through setting up your application for development with the Spark-Riak connector. You will need to know this configuration information before you write any code.
 
 
 ## Configuration  
 
-» **Where does this section come in? After the download/install? Is this preparation for development locally? Does someone adding the connector as a dependency in their app need to know this?** «
+The configuration stuff is something they will need to know in order to write programs that use the connector, so they should be familiar with this before they write code. The process is they write code, build a pom.xml file that has all the dependecies named so they can be automatically downloaded during build, build the program, run/see if it work, repeat.
+
+»**What is a `SparkContext`? What does it do?**« 
 
 You can prepare `SparkContext` to connect to Riak by connecting your Spark application to Riak. You need to set certain options for the `SparkConf` object. These options are prefixed with `spark.` so they can be recognized
 from the spark-shell and set within the $SPARK_HOME/conf/spark-default.conf.
@@ -113,6 +37,23 @@ val conf = new SparkConf()
 
 val sc = new SparkContext("spark://10.0.4.1:7077", "test", conf)
 ```
+
+## Libraries 
+
+Several .jars are produced in spark-riak-connector/target/ when the Spark-Riak connector is built:
+
+* `spark-riak-connector-1.0.0.jar` - the main connector jar.
+* `spark-riak-connector-java-1.0.0.jar` - required for developing Spark applications in Java.
+* `guava-14.0.1.jar` - the connector depends on this library.
+* `jackson-datatype-joda-2.2.2.jar` - the connector depends on this library.
+* `joda-time-2.1.jar` - the connector depends on this library.
+* `jackson-module-scala_2.10-2.4.4.jar` - the connector depends on this library.
+* `jcommon-1.0.23.jar` - the connector depends on this library.
+* `scala-java8-compat_2.10-0.3.0.jar` - the connector depends on this library.
+* `dataplatform-riak-client-1.0.0.jar` - the connector depends on this library.
+
+All of these libraries need to be referenced by your Spark application and accessible through the classpath of the driver program.
+
 
 ##Creating Spark Context
 » **Same here... is this information for someone developing locally after a download/build or is it equally important for someone adding the connector as a dependency?** « 

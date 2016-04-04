@@ -13,12 +13,6 @@ To install and use the Spark-Riak connector from your local repo, you'll need to
 3. Then [build](#build) the connector.
 
 
-
-
-3
-. Then get [configure](#configuration) Spark-Riak connector.
-
-
 ## Prerequisites
 
 In order to use the Spark-Riak connector, you must have the following installed: 
@@ -40,6 +34,70 @@ $ git clone https://github.com/basho/spark-riak-connector.git
 ```
 
 ## Build
+
+If you are using the Spark-Riak connector for a Java or Scala application, please see the "Build for Java/Scala apps" section below. If you are building an app in any other language, you can skip to [Build command](#build-command).
+
+
+###Build for Java/Scala apps
+
+The examples below demonstrate which dependencies to add and how to add them to your pom.xml so the Spark-Riak connector builds correctly with your Java/Scala application. (Alternatively, you can explore the [source code](https://github.com/basho/spark-riak-connector/tree/documentation/examples/src/main) of bundled examples in Java and Scala.)
+
+#### Automatically download `dataplatform-riak-client.jar`
+
+To download `dataplatform-riak-client.jar`»**This file is listed in the jars that automatically happen during build. Should it be removed from that list?**« automatically during the build, the following repository should be added to pom.xml: 
+
+```xml
+<repository>
+    <id>bintray</id>
+    <url>https://dl.bintray.com/basho/data-platform</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>false</enabled>
+    </snapshots>
+</repository>
+```
+
+#### Maven dependency
+
+If your Spark application uses Maven, you will need to include the following dependency to enable the Spark-Riak connector:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.basho</groupId>
+        <artifactId>spark-riak-connector</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    ...
+</dependencies>
+```
+
+#### Java dependency
+
+If your Spark application is going to be written in Java, add the following dependency in addition to the [Maven dependency](#maven-dependency) above:
+
+```xml
+<dependency>
+    <groupId>com.basho</groupId>
+    <artifactId>spark-riak-connector-java</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+#### Necessary imports
+
+The following import statements are required to be in the Java or Scala files that use the connector:
+
+```scala
+import com.basho.riak.client.core.query.Namespace
+import com.basho.riak.spark.rdd.RiakFunctions
+import org.apache.spark.{SparkContext, SparkConf}
+import com.basho.riak.spark._
+```
+
+### Build command
 
 Building the Spark-Riak connector is as easy as running a single command:
 
